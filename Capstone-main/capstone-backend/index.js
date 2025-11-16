@@ -20,5 +20,3 @@ mongoose.connect(process.env.MONGODB_URI)
 
         app.listen(3000, () => console.log("Task Manager API running on port 3000"));
 });
-
-//mongodb+srv://admin:ijIRga47Ik0nLY27@cluster0.v1jljjb.mongodb.net/?appName=Cluster0
