@@ -5,7 +5,7 @@ const cors = require("cors")
 const authRoutes = require("./routes/auth");
 const taskRoutes = require("./routes/task");
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         const app = express();
         app.use(cors({
