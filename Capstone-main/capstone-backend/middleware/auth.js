@@ -5,7 +5,7 @@ function verifyToken(req, res, next) {
   if (!authHeader) return res.sendStatus(401);
   const token = authHeader.split(" ")[1];
 
-  jwt.verify(token, "w4h9V7xYpL3QmZ8tR2fN6jBvXsC1KdPzF0qW8eYtUaMvJrXn", (err, decoded) => {
+  jwt.verify(token, "NoVuaK7GUNteIQNixag9rRa+JejLByINXfXqv7RwOnA=", (err, decoded) => {
     if (err) return res.sendStatus(403);
     req.user = decoded;
     next();
