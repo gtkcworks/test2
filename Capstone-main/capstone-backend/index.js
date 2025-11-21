@@ -10,7 +10,7 @@ const taskRoutes = require("./routes/task");
    const PORT = process.env.PORT || 3000;
    const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(MONGODB_URI)
     .then(() => {
         const app = express();
         app.use(cors({
