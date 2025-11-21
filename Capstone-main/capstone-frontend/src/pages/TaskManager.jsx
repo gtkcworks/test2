@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 
 export default function TaskManager() {
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
   const [tasks, setTasks] = useState([]);
   const [taskName, setTaskName] = useState("");
   const [taskDeadline, setTaskDeadline] = useState("");
 
+  
   const getTasks = async () => {
     const jwt = localStorage.getItem("jwt")
     try{
-      const response = await fetch("http://localhost:3000/tasks", {
+      const response = await fetch(`${API_URL}/tasks`, {
         headers: {
           'Authorization': `Bearer ${jwt}`
         }
@@ -27,7 +29,7 @@ export default function TaskManager() {
   const addTasks = async () => {
     const jwt = localStorage.getItem("jwt")
     try{
-      const response = await fetch("http://localhost:3000/tasks", {
+      const response = await fetch(`${API_URL}/tasks`, {
         method: "POST",
         headers: {
           'Content-Type': `application/json`,
@@ -49,7 +51,7 @@ export default function TaskManager() {
   const updateTask = async (task) => {
     const jwt = localStorage.getItem("jwt")
     try{
-      const response = await fetch(`http://localhost:3000/tasks/${task._id}`, {
+      const response = await fetch(`${API_URL}/tasks/${task._id}`, {
         method: "PUT",
         headers: {
           'Content-Type': `application/json`,
@@ -67,39 +69,28 @@ export default function TaskManager() {
     }
   }
 
-  const deleteTask = async (task) => {
-    const jwt = localStorage.getItem("jwt")
-    console.log(task)
-    try{
-      const delUrl = `http://localhost:3000/tasks/${task._id}`
-      console.log(delUrl)
-      const response = await fetch(delUrl, {
-        method: "DELETE",
-        headers: {
-          // 'Content-Type': `application/json`,
-          'Authorization': `Bearer ${jwt}`
-        }
-      })
-      console.log(response)
-      if(response.ok){
-        console.log("Deleted successfully")
-      }
-    }catch(error){
-      console.log(error)
-      console.log("Error making Delete Task call")
-    }
-  }
+ const deleteTask = async (task) => {
+       const jwt = localStorage.getItem("jwt")
+       try{
+         const response = await fetch(`${API_URL}/tasks/${task._id}`, {
+           method: "DELETE",
+           headers: {
+             'Authorization': `Bearer ${jwt}`
+           }
+         })
+         if(response.ok){
+           console.log("Deleted successfully")
+         }
+       }catch(error){
+         console.log(error)
+         console.log("Error making Delete Task call")
+       }
+     }
 
-  // Load tasks from localStorage on component mount
-  useEffect(() => {
-    getTasks()
-    // const savedTasks = localStorage.getItem("tasks");
-    // if (savedTasks) {
-    //   setTasks(JSON.parse(savedTasks));
-    // }
-  }, []);
+   useEffect(() => {
+       getTasks()
+     }, []);
 
-  // Save tasks to localStorage whenever tasks change
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);

@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react"
 
-export default function Home() {
+export default function Home() {{
    const [email, setEmail] = useState("")
    const [password, setPassword] = useState("")
-
-   const textbox = {
-      padding: 5,
-      margin: 5,
-      placeItems: "center"
+   const [error, setError] = useState("")
    }
+
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
+      const textbox = {
+         padding: 5,
+         margin: 5,
+         placeItems: "center"
+      }
 
    const login = async (e) => {
       e.preventDefault()
       console.log(`Email: ${email}`)
-      const response = await fetch("http://localhost:3000/auth/login", {
+      const response = await fetch(`${API_URL}/auth/login`, {
          method: "POST",
          headers: {
             "Content-Type": "application/json"
@@ -29,8 +33,8 @@ export default function Home() {
    }
    return (
       <div>
-         <h1>Welcome to the Task Manager App</h1>
-         <p>Please login to use the Task Manager</p>
+         <h1>Welcome to my Task Manager App</h1>
+         <p>Please login to use the Task Manager!</p>
          <form>
             <input type="email" id="emailInput" onChange={(e) => setEmail(e.target.value)} placeholder="Email" style={textbox} />
             <br />
